@@ -1,0 +1,153 @@
+.reg-modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 5px;
+
+  h2.reg-modal-title {
+    font-weight: 600;
+    font-size: 32px;
+  }
+
+  p.reg-modal-desc {
+    color: #606770;
+    margin-top: -5px;
+  }
+}
+
+.fb-reg-form {
+  .reg-form-first-two-clm {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    .fb-reg-form-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccd0d5;
+      margin: 0 0px 10px;
+      background-color: #f5f6f7;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .reg-form-middle-two-clm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .fb-reg-form-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccd0d5;
+      background-color: #f5f6f7;
+    }
+  }
+
+  .birth-item-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .birth-title {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      color: #606770;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .birth-date-area {
+      display: flex;
+      justify-content: space-between;
+
+      select {
+        width: 150px;
+        padding: 5px;
+        background-color: white;
+        border: 1px solid #ccd0d5;
+        font-weight: 300;
+        border-radius: 6px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  .gender-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .gender-title {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      color: #606770;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .gender-items {
+      display: flex;
+      justify-content: space-between;
+
+      .gender-wrappe {
+        border: 1px solid #ccd0d5;
+        width: 150px;
+        padding: 5px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        color: #1c1e21;
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .terms {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .terms-one {
+      font-size: 11px;
+      color: #606770;
+    }
+
+    .terms-two {
+      font-size: 11px;
+      color: #606770;
+    }
+  }
+
+  .fb-reg-form-sbmt-btn {
+    display: flex;
+    justify-content: center;
+
+    .sbmt-btn {
+      padding: 5px 70px;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: 900;
+      background-color: #00a400;
+      border: none;
+      color: white;
+    }
+  }
+}
+
+.btn-close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+}

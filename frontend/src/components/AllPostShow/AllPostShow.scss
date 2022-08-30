@@ -1,0 +1,302 @@
+// custom shadows
+:root {
+  --small-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --medium-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+// facebook post area
+.fb-create-news-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  .fb-all-post-area {
+    display: flex;
+    padding: 15px 10px;
+    background-color: white;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: var(--small-shadow);
+    flex-direction: column;
+    overflow: hidden;
+
+    .post-top-part {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .post-img-title {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .post-title {
+          display: flex;
+          flex-direction: column;
+
+          .user-name {
+            color: black;
+            font-size: 15px;
+            font-weight: bold;
+          }
+
+          .time-icon {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+
+            .post-time {
+              font-size: 13px;
+              color: #777777;
+            }
+
+            .post-type-icon {
+              color: #777777;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .post-more-option-btn {
+        color: #686868;
+        font-size: 25px;
+      }
+    }
+
+    .post-caption {
+      color: black;
+      font-weight: 400;
+      padding: 8px 0px;
+    }
+
+    .fb-post-feature-img-area img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    // like comment area
+    .fb-post-like-comment-area {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+
+      .like-comment-count {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .left-side {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .emoji {
+            display: flex;
+            align-items: center;
+
+            .emoji-one {
+              color: #e57311;
+              font-size: 17px;
+              display: flex;
+            }
+            .emoji-two {
+              color: #1877f2;
+              font-size: 17px;
+              display: flex;
+            }
+            .emoji-three {
+              color: #e73f5a;
+              font-size: 17px;
+              display: flex;
+            }
+          }
+
+          .like-people {
+            font-size: 15px;
+            color: #777777;
+            font-weight: 400;
+          }
+        }
+
+        .right-side {
+          font-size: 15px;
+          color: #777777;
+          font-weight: 400;
+
+          a {
+            color: #777777;
+
+            span {
+              color: #777777;
+            }
+          }
+        }
+      }
+
+      .hr-line {
+        padding: 0px !important;
+      }
+    }
+
+    .fb-post-like-comment-btn {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      padding: 0px 10px;
+      width: 100%;
+
+      .like-btn {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        color: #777777;
+        font-size: 17px;
+        font-weight: 400;
+        width: 33%;
+        justify-content: center;
+        transition: 0.3s;
+        border-radius: 6px;
+        padding: 5px 0;
+        cursor: pointer;
+
+        .icon {
+          display: flex;
+          font-size: 25px;
+          color: #777777;
+        }
+
+        &:hover {
+          background-color: #f2f2f2;
+        }
+      }
+
+      .comment-btn {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        color: #777777;
+        font-size: 17px;
+        font-weight: 400;
+        width: 33%;
+        justify-content: center;
+        border-radius: 6px;
+        transition: 0.3s;
+        cursor: pointer;
+
+        .icon {
+          display: flex;
+          font-size: 25px;
+          color: #777777;
+        }
+
+        &:hover {
+          background-color: #f2f2f2;
+        }
+      }
+
+      .share-btn {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        color: #777777;
+        font-size: 17px;
+        font-weight: 400;
+        width: 33%;
+        justify-content: center;
+        transition: 0.3s;
+        border-radius: 6px;
+        cursor: pointer;
+
+        .icon {
+          display: flex;
+          font-size: 25px;
+          color: #777777;
+        }
+
+        &:hover {
+          background-color: #f2f2f2;
+        }
+      }
+    }
+
+    .fb-post-comment-section {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 5px;
+
+      .comment-user-show {
+        display: flex;
+        position: relative;
+        align-items: center;
+        gap: 1rem;
+        transition: 0.3s;
+        padding: 5px 3px;
+        border-radius: 6px;
+        margin: 5px 0px;
+
+        img.user-profile {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          border: 2px solid #1877f2;
+          padding: 2px;
+          object-fit: cover;
+        }
+
+        .user-active-status {
+          width: 8px;
+          height: 8px;
+          background-color: #31a24c;
+          position: absolute;
+          bottom: 3px;
+          left: 21px;
+          border-radius: 50%;
+          border: 1px solid white;
+        }
+      }
+
+      form.comment-form {
+        width: 100%;
+        position: relative;
+
+        input {
+          width: 100%;
+          background-color: #f2f2f2;
+          border-radius: 20px;
+          padding: 7px 10px;
+          border: none;
+          font-weight: 400;
+          font-size: 15px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        .comment-feature-area {
+          display: flex;
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          display: flex;
+          gap: 20px;
+          font-size: 20px;
+          color: #777777;
+        }
+      }
+    }
+  }
+}

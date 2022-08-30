@@ -1,0 +1,287 @@
+.fb-home-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px 0px 0px;
+
+  .fb-home-wrapper {
+    width: 98%;
+    display: flex;
+    margin-top: 25px;
+    justify-content: space-between;
+    gap: 100px;
+
+    .fb-home-left {
+      display: flex;
+      gap: 15px;
+      width: 300px;
+      flex-direction: column;
+
+      .fb-account {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        img.fb-acc-img {
+          border-radius: 50%;
+          height: 30px;
+          width: 30px;
+        }
+      }
+
+      .fb-left-side-icons ul {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        img {
+          width: 28px;
+          height: 28px;
+        }
+
+        a {
+          font-weight: 300;
+          font-size: 15px;
+          margin-left: 8px;
+          color: black;
+        }
+
+        .logout-area {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          .icon {
+            color: #177b5f;
+            font-size: 25px;
+          }
+
+          a {
+            font-weight: 500;
+            font-size: 15px;
+            margin-left: 8px;
+            color: black;
+          }
+        }
+
+        .fb-left-drop-down {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .down-icon {
+            font-size: 30px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            background-color: #dfdfdf;
+          }
+        }
+      }
+    }
+
+    .fb-home-middle {
+      width: 65%;
+
+      .fb-store-area {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .fb-store-items {
+          width: 110px;
+          height: 200px;
+          background-color: white;
+          border-radius: 6px;
+          overflow: hidden;
+
+          .store-image-area {
+            img.store-image {
+              max-width: 100%;
+              height: 150px;
+              object-fit: cover;
+            }
+
+            &:hover {
+              transform: scale();
+            }
+          }
+
+          .user-name {
+            position: relative;
+
+            .store-icon {
+              text-align: center;
+              font-size: 30px;
+              color: #1877f2;
+              position: absolute;
+              left: 40px;
+              bottom: -18px;
+              background: white;
+              display: flex;
+              padding: 3px;
+              border-radius: 50%;
+            }
+
+            p {
+              font-size: 14px;
+              color: black;
+              position: absolute;
+              left: 15px;
+              bottom: -45px;
+            }
+          }
+        }
+
+        // friend story
+        .friend-store-items {
+          width: 110px;
+          height: 200px;
+          background-color: white;
+          border-radius: 6px;
+          overflow: hidden;
+          position: relative;
+
+          .friend-store-image-area {
+            img.friend-store-image {
+              max-width: 100%;
+              height: 200px;
+              object-fit: cover;
+            }
+          }
+
+          .friend-name {
+            p {
+              font-size: 14px;
+              color: black;
+              z-index: 999;
+              position: absolute;
+              bottom: 0px;
+              left: 10px;
+              color: white;
+              font-weight: 500;
+            }
+          }
+
+          .friend-profile-image {
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              position: absolute;
+              top: 10px;
+              left: 10px;
+              object-fit: cover;
+              border: 4px solid #1877f2;
+            }
+          }
+        }
+      }
+    }
+
+    .fb-home-right {
+      display: flex;
+      flex-direction: column;
+
+      .right-side-one {
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          color: #585858;
+          font-weight: 500;
+        }
+
+        .user-birthday-info {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          padding: 10px 0px 0px;
+          align-items: flex-start;
+
+          .icon {
+            font-size: 20px;
+            color: #1c8ceb;
+          }
+
+          .user-name {
+            font-size: 16px;
+            font-weight: 300;
+          }
+
+          .user-name b {
+            font-weight: 500;
+          }
+        }
+      }
+      .right-side-active-users {
+        display: flex;
+        flex-direction: column;
+
+        .title-or-icons {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
+
+          .title {
+            color: #585858;
+            font-weight: 500;
+          }
+
+          .icons {
+            font-size: 20px;
+            display: flex;
+            gap: 20px;
+
+            a {
+              color: #585858;
+            }
+          }
+        }
+
+        .activer-user-show {
+          display: flex;
+          position: relative;
+          align-items: center;
+          gap: 1rem;
+          transition: 0.3s;
+          padding: 5px 3px;
+          border-radius: 6px;
+          margin: 5px 0px;
+
+          &:hover {
+            background-color: #c5c5c6;
+          }
+
+          img.user-profile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #1877f2;
+            padding: 2px;
+            object-fit: cover;
+          }
+
+          a {
+            font-size: 16px;
+            font-weight: 300;
+            color: black;
+          }
+
+          .user-active-status {
+            width: 8px;
+            height: 8px;
+            background-color: #31a24c;
+            position: absolute;
+            bottom: 3px;
+            left: 21px;
+            border-radius: 50%;
+            border: 1px solid white;
+          }
+        }
+      }
+    }
+  }
+}
