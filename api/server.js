@@ -7,10 +7,10 @@ import errorHandler from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
 
 // express initialize
-const app = express();
+const app = express(); 
 
 // environment setup
-dotenv.config();
+dotenv.config(); 
 const PORT = process.env.SERVER_PORT;
 
 

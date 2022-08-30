@@ -184,7 +184,7 @@ export const UpdateUser = async (req, res, next) => {
         await User.create({
             ...req.body, 
             password : has 
-        }, { new : true });
+        });
 
         // message
         res.status(200).json({
@@ -193,6 +193,7 @@ export const UpdateUser = async (req, res, next) => {
         
     } catch (error) {
         
-        next(error);
+        console.log(error);
+
     }
 }

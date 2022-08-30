@@ -4,38 +4,44 @@ import mongoose from "mongoose";
 const userSchema = mongoose.Schema({
     name : {
         type : String,
-        required : [true, 'name feild is required'],
+        required : true,
         unique : true, 
         trim : true
     }, 
     email : {
         type : String,
-        required : [true, 'email feild is required'],
+        required : true,
         unique : true, 
         trim : true
     }, 
     cell : {
         type : String,
-        required : [true, 'cell feild is required'],
+        required : true,
         unique : true, 
         trim : true
     }, 
-    age : {
-        type : Number,
-        required : [true, 'age feild is required'],
+    gender : {
+        type : String,
+        required : true,
         trim : true
     },
-    gender : {
+    birthday : {
+        type : Number
+    },
+    birthmonth : {
         type : String
     },
-    username : {
+    birthyear : {
+        type : Number
+    },
+    surname : {
         type : String,
-        required : [true, 'username feild is required'],
+        required : true,
         trim : true
     }, 
     password : {
         type : String,
-        required : [true, 'password feild is required'], 
+        required : true, 
         trim : true
     }, 
     photo : {

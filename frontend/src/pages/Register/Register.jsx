@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { BsQuestionCircleFill } from "react-icons/bs";
+import axios from 'axios';
 import './Register.scss';
 
 class Register extends Component {
   render() {
 
     const { regModal, handleRegModalHide } = this.props;
+
+    // data send
+    try {
+
+      axios.post('http://localhost:5050/api/users/register')
+      .then()
+      .catch();
+      
+    } catch (error) {
+      console.log(error);
+    }
 
     return (
       <>
