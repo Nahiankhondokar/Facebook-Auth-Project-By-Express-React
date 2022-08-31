@@ -10,14 +10,10 @@ const userSchema = mongoose.Schema({
     }, 
     email : {
         type : String,
-        required : true,
-        unique : true, 
         trim : true
     }, 
     cell : {
         type : String,
-        required : true,
-        unique : true, 
         trim : true
     }, 
     gender : {
@@ -25,13 +21,13 @@ const userSchema = mongoose.Schema({
         required : true,
         trim : true
     },
-    birthday : {
+    birth_day : {
         type : Number
     },
-    birthmonth : {
+    birth_month : {
         type : String
     },
-    birthyear : {
+    birth_year : {
         type : Number
     },
     surname : {
@@ -47,6 +43,10 @@ const userSchema = mongoose.Schema({
     photo : {
         type : String,
         default : 'avatar.png'
+    }, 
+    isVerified : {
+        type : Boolean,
+        default : false
     }, 
     isAdmin : {
         type : Boolean,

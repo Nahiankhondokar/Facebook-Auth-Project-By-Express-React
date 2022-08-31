@@ -180,11 +180,23 @@ export const UpdateUser = async (req, res, next) => {
         const salt = await bcrypt.genSalt();
         const has = await bcrypt.hash(req.body.password, salt);
 
-        // create user
-        await User.create({
-            ...req.body, 
-            password : has 
-        });
+        let auth = req.body.celloremail;
+        // create user wtih email
+        if(req.body.celloremail.endsWith('.com')){
+            await User.create({
+                ...req.body, 
+                email : req.body.celloremail,
+                password : has 
+            });
+        }else {
+            // create user wtih phone
+            await User.create({
+                ...req.body, 
+                cell : req.body.celloremail,
+                password : has 
+            });
+
+        }
 
         // message
         res.status(200).json({

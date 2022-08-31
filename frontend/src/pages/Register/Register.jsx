@@ -1,24 +1,54 @@
 import React, { Component } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { BsQuestionCircleFill } from "react-icons/bs";
-import axios from 'axios';
 import './Register.scss';
 
 class Register extends Component {
-  render() {
 
+  constructor(props){
+    super(props)
+
+    this.state = {
+        input : {
+          name  : '',
+          surname : '', 
+          celloremail :'',
+          password : '',
+          gender : '',
+          birth_day : '',
+          birth_month : '',
+          birth_year : ''
+        }
+    }
+
+
+
+  }
+
+  
+
+  render() {
+    console.log(this.state.input);
+    // modal steta
     const { regModal, handleRegModalHide } = this.props;
 
-    // data send
-    try {
+    // state data
+    const { name, surname, celloremail, password, gender, birth_day, birth_month, birth_year } = this.state.input;
 
-      axios.post('http://localhost:5050/api/users/register')
-      .then()
-      .catch();
-      
-    } catch (error) {
-      console.log(error);
+    // input value update
+    const handleInputUpdate = (e) => {
+     
+      this.setState((prev) => ({
+        ...prev, 
+        input : {
+          ...prev.input,
+          [e.target.name] : e.target.value
+        }
+      }));
+     
     }
+
+
 
     return (
       <>
@@ -35,13 +65,15 @@ class Register extends Component {
           <form action="" className='fb-reg-form'>
   
             <div className="reg-form-first-two-clm">
-              <input type="text" className='fb-reg-form-input' placeholder='First name' name='firstname'/>
-              <input type="text" className='fb-reg-form-input' placeholder='Surname' name='surname'/>
+              <input type="text" className='fb-reg-form-input' placeholder='First name' value={ name } onChange={ handleInputUpdate } name='name'/>
+
+
+              <input type="text" className='fb-reg-form-input' placeholder='Surname' name='surname' value={ surname } onChange={ handleInputUpdate } />
             </div>
   
               <div className="reg-form-middle-two-clm">
-              <input type="text" className='fb-reg-form-input' placeholder='Mobile number or email address' name='phoneoremail'/>
-              <input type="text" className='fb-reg-form-input' placeholder='New password' name='password'/>
+              <input type="text" className='fb-reg-form-input' placeholder='Mobile number or email address' name='celloremail' value={ celloremail } onChange={ handleInputUpdate }/>
+              <input type="text" className='fb-reg-form-input' placeholder='New password' name='password' value={ password } onChange={ handleInputUpdate } />
             </div>
             
   
@@ -53,7 +85,7 @@ class Register extends Component {
               </div>
   
               <div className="birth-date-area">
-              <select aria-label="Day" name="birthday_day" id="day" title="Day">
+              <select aria-label="Day" name="birth_day" id="day" title="Day" value={ birth_day } onChange={ handleInputUpdate } >
               <option value="">Day</option>
               <option value="2">2</option>
               <option value="1">1</option>
@@ -88,7 +120,7 @@ class Register extends Component {
               <option value="31">31</option>
               </select>
   
-              <select aria-label="Month" name="birthday_month" id="month" title="Month" >
+              <select aria-label="Month" name="birth_month" id="month" title="Month" value={ birth_month } onChange={ handleInputUpdate } >
                 <option value="">Month</option>
                 <option value="Jan">Jan</option>
                 <option value="Feb">Feb</option>
@@ -104,7 +136,7 @@ class Register extends Component {
                 <option value="Dec">Dec</option>
               </select>
   
-              <select aria-label="Year" name="birthday_year" id="year" title="Year">
+              <select aria-label="Year" name="birth_year" id="year" title="Year" value={ birth_year } onChange={ handleInputUpdate } >
                 <option value="">Year</option>
                 <option value="2022">2022</option>
                 <option value="2021">2021</option>
@@ -238,17 +270,17 @@ class Register extends Component {
   
                 <div className="gender-wrappe">
                   <label htmlFor="female"> FeMale</label>
-                  <input type="radio" id='female' name='gender'/>
+                  <input type="radio" id='female' name='gender' value='female' onChange={ handleInputUpdate }/>
                 </div>
                 
                 <div className="gender-wrappe">
                   <label htmlFor="male"> Male</label>
-                  <input type="radio" id='male' name='gender'/>
+                  <input type="radio" id='male' name='gender' value='male' onChange={ handleInputUpdate }/>
                 </div>
   
                 <div className="gender-wrappe">
                   <label htmlFor="custom"> Custom</label>
-                  <input type="radio" id='custom' name='gender'/>
+                  <input type="radio" id='custom' name='gender' value='custom' onChange={ handleInputUpdate }/>
                 </div>
                 
   
@@ -269,7 +301,7 @@ class Register extends Component {
   
     
             <div className="fb-reg-form-sbmt-btn">
-              <input type="submit" className='sbmt-btn' placeholder='First name' value="Sign Up" />
+              <input type="submit" className='sbmt-btn' value="Sign Up" />
             </div>
           </form>
         </Modal.Body>
