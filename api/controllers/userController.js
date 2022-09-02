@@ -220,7 +220,8 @@ export const UpdateUser = async (req, res, next) => {
             const user = await User.create({
                 ...req.body, 
                 cell : req.body.celloremail,
-                password : has 
+                password : has,
+                isVerified : true
             });
 
 

@@ -36,7 +36,7 @@ class Home extends Component {
           <div className="fb-home-left">
             <div className='fb-account'>
               <img className='fb-acc-img' src="https://scontent.fdac138-1.fna.fbcdn.net/v/t39.30808-1/274738893_3461289187430961_7168829541213425647_n.jpg?stp=c0.5.40.40a_cp0_dst-jpg_p40x40&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_eui2=AeEztD_GheiTODg75pIq0cNlY3neVO8R6i9jed5U7xHqL9tOOL6zdG7EHczE5MyOPETNcrKB8aLHYUl6J4xxke-g&_nc_ohc=9VxKoKdYWKQAX8fCAlx&tn=uwcbJkrwGo2JzeDW&_nc_ht=scontent.fdac138-1.fna&oh=00_AT81pf9cAJOU_D1sKBm2wWD1igWWZ4WftPsMJbiZ397aJw&oe=630950A0" alt="" /> 
-              <span className='fb-acc-user-name'>Nahian&nbsp;Khondokar</span>
+              <span className='fb-acc-user-name'>{ this.props.user.name }</span>
             </div>
 
             <div className="fb-left-side-icons">
@@ -213,13 +213,13 @@ class Home extends Component {
   }
 }
 
-// navigation
+// navigation, dispatch
 export function HomeWithRouter(){
 
   const navigate = useNavigate();
-  const { dispatch } = useContext(UserContext);
+  const { dispatch, user } = useContext(UserContext);
 
-  return <Home navigate={navigate} dispatch={dispatch} />
+  return <Home navigate={navigate} dispatch={dispatch} user={user} />
 }
 
 export default Home;
