@@ -1,33 +1,41 @@
-import axios from 'axios';
 import React, { Component, useContext } from 'react';
-import { BsPlusSquare } from "react-icons/bs";
 import { Link, useNavigate } from 'react-router-dom';
-import UserContext from '../../context/UserContext';
-import { errorToaster, successToaster } from '../../utility/Toaster';
+import { BsPlusSquare } from "react-icons/bs";
 import './ResetPassword.scss';
+import { errorToaster, successToaster } from '../../utility/Toaster';
+import axios from 'axios';
+import UserContext from '../../context/UserContext';
 
-class ResetPassword extends Component {
+class SendEmailForPassReset extends Component {
+
     constructor(props){
         super(props);
 
         this.state = {
             input : {
-                auth : ''
+                confm_pass : '',
+                new_pass : '', 
+                id : ''
             }
         }
     }
 
   render() {
 
-    // console.log(this.state.input);
-    // input value update
-    const handleInputUpdate = (e) => {
+    // console.log(this.state.input.id);
+
+    // state value
+    const { old_pass , new_pass, confm_pass } = this.state.input;
+
+     // input value update
+     const handleInputUpdate = (e) => {
     
         this.setState((prev) => ({
             ...prev, 
             input : {
-            ...prev.input,
-            [e.target.name] : e.target.value
+                ...prev.input,
+                id : this.props.user._id,
+                [e.target.name] : e.target.value
             }
         }));
         
@@ -38,24 +46,22 @@ class ResetPassword extends Component {
         e.preventDefault();
 
         // validation
-        if(this.state.input.auth == ''){
+        if(!new_pass || !confm_pass){
             errorToaster('Feild is required !')
+        }else if(new_pass != confm_pass){
+            errorToaster('Password Does not Match !')
         }else{
 
             try {
 
-               if(this.state.input.auth.endsWith('.com')){
-                axios.post('http://localhost:5050/api/users/find-user', this.state.input)
+                axios.post('http://localhost:5050/api/users/reset-password', this.state.input)
                 .then(res => {
-                    successToaster('valid user');
-                    this.props.dispatch({ type : 'RESET_PASS_USER', payload : res.data.valid_user });
-                    console.log(res.data.valid_user);
-                    this.props.navigate('/reset-password/confirmed');
+                    successToaster('Password Changed Successfully');
+                    this.props.navigate('/login');
                 })
-                .catch();
-               }else {
-                errorToaster('Only email is accessable');
-               }
+                .catch(() => {
+                    errorToaster('Reset password failed');
+                });
                 
             } catch (error) {
                 errorToaster('Request Failed');
@@ -64,10 +70,8 @@ class ResetPassword extends Component {
 
     }
 
-          
-
     return (
-      <>
+        <>
         <div className='reset-pass-container'>
             <div className="reset-pass-wrapper">
                <div className="top-bar shadow-sm">
@@ -76,7 +80,7 @@ class ResetPassword extends Component {
                             <img src="https://res.cloudinary.com/jerrick/image/upload/v1624628212/60d5dbf40f3e87001efa16c1.png" alt="" />
                         </div>
                         <div className="top-bar-login-area">
-                            <form action="" className='login-form'>
+                            <form action='' className='login-form' method="POST">
                                 <input type="text" placeholder='Email or phone' className='login-input'/>
                                 <input type="password" placeholder='Password' className='login-input'/>
                                 <input type="submit" className='sbmt-btn' value="Log In"/>
@@ -89,17 +93,16 @@ class ResetPassword extends Component {
                <div className="reset-pass-area">
                     <div className="reset-pass-body shadow-sm">
                     <div className="title">
-                        <h4>Find Your Account</h4>
+                        <h4>Password Reset</h4>
                     </div>
                     <hr />
                     <div className="form-body">
-                        <p>Please enter your email address or mobile number to search for your account.</p>
                         <form onSubmit={handleFormSubmit} method="POST">
-                            <input type="text" placeholder='Email Address or mobile number' className='input-area' name='auth' onChange={handleInputUpdate} />
-                            <hr />
+                            <input type="text" placeholder='New Password' className='input-area' name='new_pass' onChange={handleInputUpdate} />
+                            <input type="text" placeholder='Confirmed Password' className='input-area' name='confm_pass' onChange={handleInputUpdate} />
                             <div className="sbmt-btns">
-                                <button className='btn cancel'><b>Cancel</b></button>
-                                <button type='submit' className='btn btn-primary search'><b>Search</b></button> 
+                                <Link to="/login" className='btn cancel'><b>Cancel</b></Link>
+                                <button type='submit' className='btn btn-primary search'><b>Continue</b></button> 
                             </div>
                         </form>
                     </div>
@@ -177,12 +180,14 @@ class ResetPassword extends Component {
     )
   }
 }
-// navigation
-export function ResetPasswordWithRouter (){
+
+// navigate
+export function SendEmailForPassResetWithRouter() {
 
     const navigate = useNavigate();
-    const { dispatch } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
-    return <ResetPassword navigate={navigate} dispatch={dispatch} />
+    return <SendEmailForPassReset navigate={navigate} user={user} />
+
 }
-export default ResetPassword;
+export default SendEmailForPassReset;

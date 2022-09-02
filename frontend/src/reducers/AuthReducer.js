@@ -15,6 +15,11 @@ const AuthReducer = (state, { type, payload }) => {
             isLoggedIn : false,
             user : { }
         };
+
+        case 'RESET_PASS_USER':
+            return {
+                user : payload
+            };
     
         default:
             return state;

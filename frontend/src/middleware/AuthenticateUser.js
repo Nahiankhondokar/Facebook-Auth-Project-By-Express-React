@@ -9,7 +9,7 @@ const AuthenticateUser = ({ children }) => {
 
     // context
     const { isLoggedIn } = useContext(UserContext);
-    return isLoggedIn ? children : <Navigate to="/login" />
+    return isLoggedIn === true ? children : <Navigate to="/login" />
 
 }
 

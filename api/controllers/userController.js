@@ -301,3 +301,73 @@ export const UpdateUser = async (req, res, next) => {
     }
 }
 
+
+/**
+ *  Valid account find
+ *  @param Public
+ *  @param post
+ */
+ export const TriedToPassResetUser = async (req, res, next) => {
+
+    try {
+
+        // find valid user
+        if(req.body.auth.endsWith('.com')){
+            const valid_user = await User.findOne({ email : req.body.auth });
+
+            // vlidation
+            if(!valid_user){
+                res.status(400).json({
+                    message : "Not match"
+                });
+            }
+
+            
+            if(valid_user){
+                res.status(200).json({
+                    valid_user
+                });
+            }
+
+        }else{
+            res.status(400).json({
+                message : "Phone Number is not allow !"
+            });
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+/**
+ *  password reset
+ *  @param Public
+ *  @param post
+ */
+ export const UserResetPassword = async (req, res) => {
+
+    try {
+
+        // get data
+        const { id, new_pass, confm_pass } = req.body;
+
+        // has pass
+        const salt = await bcrypt.genSalt();
+        const has = await bcrypt.hash(new_pass, salt);
+
+        // reset password
+        await User.findByIdAndUpdate(id, {
+            password : has
+        });
+
+        res.status(200).json({
+            message : "Password Changed Successfully"
+        });
+    
+    } catch (error) {
+        console.log(error);
+    }
+}
+
