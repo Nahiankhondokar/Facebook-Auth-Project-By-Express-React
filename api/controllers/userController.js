@@ -184,7 +184,7 @@ export const UpdateUser = async (req, res, next) => {
     try {
 
         // has pass
-        const salt = await bcrypt.genSalt();
+        const salt = await bcrypt.genSalt(10);
         const has = await bcrypt.hash(req.body.password, salt);
 
         let auth = req.body.celloremail;
@@ -354,7 +354,7 @@ export const UpdateUser = async (req, res, next) => {
         const { id, new_pass, confm_pass } = req.body;
 
         // has pass
-        const salt = await bcrypt.genSalt();
+        const salt = await bcrypt.genSalt(10);
         const has = await bcrypt.hash(new_pass, salt);
 
         // reset password
@@ -369,5 +369,52 @@ export const UpdateUser = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+
+
+/**
+ *  Logged in user data
+ *  @param Public
+ *  @param get
+ */
+ export const LoggedInUserData = async (req, res, next) => {
+
+    try {
+        // get token
+        const bearer_token = req.headers.authorization;
+
+        // token check
+        if(!bearer_token){
+            next(createError(404, 'Token Not Found'));
+        }
+
+        if(bearer_token){
+
+            // ger the token
+            const token = bearer_token.split(' ')[1];
+
+            // token verify
+            const token_verify = jwt.verify(token, process.env.JWT_SECRET);
+
+            if(!token_verify){
+                next(createError(404, 'Invalid Token'));
+            }
+
+            if(token_verify){
+                 // get user
+                const user = await User.findById(token_verify.id);
+
+                res.status(200).json({
+                    user
+                });
+            }
+
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 

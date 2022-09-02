@@ -77,7 +77,7 @@ class Login extends Component {
             this.props.dispatch({ type : "LOGIN_USER_SUCCESSS", payload : res.data.user });
             this.props.navigation('/');
           }else{
-            errorToaster('Verify ?');
+            errorToaster('Verify your account ?');
           }
 
         }).catch((e) => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import { BiChevronDown } from "react-icons/bi";
 import { BsFillPlusCircleFill } from "react-icons/bs";
@@ -11,6 +11,7 @@ import Image from './../../../../frontend/src/img/me.jpg';
 import cookie from 'js-cookie';
 import './Home.scss';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../context/UserContext';
 
 class Home extends Component {
 
@@ -23,6 +24,7 @@ class Home extends Component {
       e.preventDefault();
 
       cookie.remove('token');
+      this.props.dispatch({ type : 'USER_LOGOUT'});
       this.props.navigate('/login');
     }
 
@@ -215,8 +217,9 @@ class Home extends Component {
 export function HomeWithRouter(){
 
   const navigate = useNavigate();
+  const { dispatch } = useContext(UserContext);
 
-  return <Home navigate={navigate} />
+  return <Home navigate={navigate} dispatch={dispatch} />
 }
 
 export default Home;
