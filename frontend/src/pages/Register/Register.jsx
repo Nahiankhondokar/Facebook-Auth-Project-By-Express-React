@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import { BsQuestionCircleFill } from "react-icons/bs";
+import { successToaster, errorToaster } from '../../utility/Toaster';
+import swal from 'sweetalert';
 import './Register.scss';
 
 class Register extends Component {
 
   constructor(props){
     super(props)
+
 
     this.state = {
         input : {
@@ -20,20 +24,14 @@ class Register extends Component {
           birth_year : ''
         }
     }
-
-
-
   }
 
-  
-
   render() {
-    console.log(this.state.input);
     // modal steta
     const { regModal, handleRegModalHide } = this.props;
 
     // state data
-    const { name, surname, celloremail, password, gender, birth_day, birth_month, birth_year } = this.state.input;
+    const { name, surname, celloremail, password, birth_day, birth_month, birth_year } = this.state.input;
 
     // input value update
     const handleInputUpdate = (e) => {
@@ -46,6 +44,44 @@ class Register extends Component {
         }
       }));
      
+    }
+
+    // form submit 
+    const handleRegSubmit = async (e) => {
+      e.preventDefault();
+      
+      
+     try {
+
+      if(!name || !surname || !celloremail || !password || !birth_day || !birth_month || !birth_year ){
+          errorToaster('All feilds are required');
+      }else {
+        await axios.post('http://localhost:5050/api/users/register', this.state.input)
+        .then(res => {
+
+          this.setState({
+            input : {
+              name  : '',
+              surname : '', 
+              celloremail :'',
+              password : '',
+              gender : '',
+              birth_day : '',
+              birth_month : '',
+              birth_year : ''
+            }
+          });
+
+          handleRegModalHide();
+          successToaster('Registration Completed');
+          swal( "Success" ,  "User has been successfully registered. Please login!" ,  "success");
+        });
+      }
+      
+     } catch (error) {
+      console.log(error);
+     }
+
     }
 
 
@@ -62,7 +98,7 @@ class Register extends Component {
         </Modal.Header>
   
         <Modal.Body>
-          <form action="" className='fb-reg-form'>
+          <form onSubmit={ handleRegSubmit } className='fb-reg-form' method="POST">
   
             <div className="reg-form-first-two-clm">
               <input type="text" className='fb-reg-form-input' placeholder='First name' value={ name } onChange={ handleInputUpdate } name='name'/>
@@ -71,7 +107,7 @@ class Register extends Component {
               <input type="text" className='fb-reg-form-input' placeholder='Surname' name='surname' value={ surname } onChange={ handleInputUpdate } />
             </div>
   
-              <div className="reg-form-middle-two-clm">
+            <div className="reg-form-middle-two-clm">
               <input type="text" className='fb-reg-form-input' placeholder='Mobile number or email address' name='celloremail' value={ celloremail } onChange={ handleInputUpdate }/>
               <input type="text" className='fb-reg-form-input' placeholder='New password' name='password' value={ password } onChange={ handleInputUpdate } />
             </div>
@@ -296,9 +332,6 @@ class Register extends Component {
               </span>
               <span className='terms-two'>By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</span>
             </div>
-  
-  
-  
     
             <div className="fb-reg-form-sbmt-btn">
               <input type="submit" className='sbmt-btn' value="Sign Up" />
@@ -310,4 +343,6 @@ class Register extends Component {
     )
   }
 }
+
+
 export default Register;

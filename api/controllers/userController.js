@@ -2,6 +2,10 @@ import User from "../models/User.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import createError from "./errorController.js";
+import { SendEmail } from "../utility/SendEmail.js";
+import CreateToken from "../utility/CreateToken.js";
+import Token from "../models/Token.js";
+import { SendSms } from "../utility/SendSms.js";
 
 /**
  *  All user get
@@ -133,9 +137,12 @@ export const UpdateUser = async (req, res, next) => {
 
     try {
         // get data
-        const loginUser = await User.findOne({email : req.body.email});
-
-        console.log(loginUser);
+        let loginUser = '';
+        if(req.body.auth.endsWith('.com')){
+            loginUser = await User.findOne({email : req.body.auth});
+        }else {
+            loginUser = await User.findOne({cell : req.body.auth});
+        }
 
         // email check 
         if(!loginUser){
@@ -183,18 +190,58 @@ export const UpdateUser = async (req, res, next) => {
         let auth = req.body.celloremail;
         // create user wtih email
         if(req.body.celloremail.endsWith('.com')){
-            await User.create({
+            const user = await User.create({
                 ...req.body, 
                 email : req.body.celloremail,
                 password : has 
             });
+
+            // create token 
+            const token = CreateToken({ id : user._id }, '1d');
+
+            // verify link
+            const verify_link = `http://localhost:3000/user/acc-verify/${token}`;
+
+            // secret key
+            const secretKey = Math.round(Math.random() * 10000000);
+
+            // token schema create
+            await Token.create({
+                userId : user._id,
+                token : token,
+                secretKey : secretKey
+            });
+
+            // send mail
+            await SendEmail(user.email, "Account Verify", `Verify link : ${verify_link} & Secret key : ${secretKey}`);
+            
         }else {
             // create user wtih phone
-            await User.create({
+            const user = await User.create({
                 ...req.body, 
                 cell : req.body.celloremail,
                 password : has 
             });
+
+
+            // create token 
+            const token = CreateToken({ id : user._id }, '1d');
+
+            // verify link
+            const verify_link = `http://localhost:3000/user/acc-verify/${token}`;
+
+            // secret key
+            const secretKey = Math.round(Math.random() * 10000000);
+
+            // token schema create
+            await Token.create({
+                userId : user._id,
+                token : token,
+                secretKey : secretKey
+            });
+
+            // send sms
+            // SendSms(secretKey);
 
         }
 
@@ -209,3 +256,48 @@ export const UpdateUser = async (req, res, next) => {
 
     }
 }
+
+/**
+ *  User Accont Verify 
+ *  @param Public
+ *  @param post
+ */
+ export const UserAccontVerify = async (req, res, next) => {
+
+    try {
+
+        // get data
+       const {secretKey, token} = req.body;
+
+        // token verify
+        const token_verify = jwt.verify(token, process.env.JWT_SECRET);
+
+       // secret key check
+       const keyCheck = await Token.findOne({ secretKey : secretKey.secretKey });
+
+       // validaiton
+       if(!keyCheck){
+        res.status(400).json({
+            message : "Secret Key does not match"
+        });
+       }
+
+       // match secret key
+       if(keyCheck){
+        // msg
+        res.status(200).json({
+            message : "Account Verify Successfully"
+        });
+        // user info update
+        await User.findByIdAndUpdate(token_verify.data.id, {
+            isVerified : true
+        });
+        keyCheck.remove();
+
+       }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+

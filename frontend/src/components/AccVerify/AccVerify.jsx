@@ -1,59 +1,70 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { BsPlusSquare } from "react-icons/bs";
-import { Link } from 'react-router-dom';
-import { errorToaster } from '../../utility/Toaster';
-import './ResetPassword.scss';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { errorToaster, successToaster } from '../../utility/Toaster';
+import axios from 'axios';
+import './../../pages/ResetPassword/ResetPassword.scss';
 
-class ResetPassword extends Component {
+class AccVerify extends Component {
     constructor(props){
         super(props);
 
         this.state = {
             input : {
-                auth : ''
+                secretKey : ''
             }
         }
-    }
 
+    }
   render() {
 
+    // state value
+    const { secretKey } = this.state.input;
+
+    // token from params
+    const { token, navigate } = this.props;
+
     // input value update
-    const handleInputUpdate = (e) => {
-    
+    const handleInputUpdate = async (e) => {
+        e.preventDefault();
+
         this.setState((prev) => ({
-            ...prev, 
+            ...prev,
             input : {
-            ...prev.input,
-            [e.target.name] : e.target.value
+                ...prev.iput,
+                [e.target.name] : e.target.value
             }
         }));
-        
+
     }
 
-    // form submit
-    const handleFormSubmit = (e) => {
+
+    // acc-verify form submit 
+    const handleFormSubmit = (e) =>{
         e.preventDefault();
 
         // validation
-        if(!this.state.auth){
-            errorToaster('Feild is required !')
+        if(!secretKey){
+            errorToaster('Missing Secret Key !');
         }else{
 
-            try {
+            try{
+                axios.post('http://localhost:5050/api/users/acc-verify', {
+                    token : token,
+                    secretKey : this.state.input
+                })
+                .then(res => {
+                    successToaster('Account Verify Sucssfully');
+                    navigate('/login');
+                }).catch((e) => {
+                    errorToaster('Account Verify Failed')
+                });
 
-                axios.post('')
-                .then()
-                .catch();
-                
-            } catch (error) {
-                errorToaster('Request Failed');
+            }catch(e){
+                errorToaster('Secret Key Not Match');
             }
         }
-
     }
-
-          
 
     return (
       <>
@@ -66,9 +77,9 @@ class ResetPassword extends Component {
                         </div>
                         <div className="top-bar-login-area">
                             <form action="" className='login-form'>
-                                <input type="text" placeholder='Email or phone' className='login-input'/>
-                                <input type="password" placeholder='Password' className='login-input'/>
-                                <input type="submit" className='sbmt-btn' value="Log In"/>
+                                <input type="text" placeholder='Email or phone' className='login-input' disabled/>
+                                <input type="password" placeholder='Password' className='login-input' disabled/>
+                                <input type="submit" className='sbmt-btn' value="Log In" disabled/>
                                 <Link to="/reset-password" href="#">Forgotten Password ?</Link>
                             </form>
                         </div>
@@ -78,17 +89,16 @@ class ResetPassword extends Component {
                <div className="reset-pass-area">
                     <div className="reset-pass-body shadow-sm">
                     <div className="title">
-                        <h4>Find Your Account</h4>
+                        <h4>Verify Your Account</h4>
                     </div>
                     <hr />
                     <div className="form-body">
-                        <p>Please enter your email address or mobile number to search for your account.</p>
-                        <form onSubmit={handleFormSubmit} method="POST">
-                            <input type="text" placeholder='Email Address or mobile number' className='input-area' name='auth' onChange={handleInputUpdate} />
+                        <p>Please check your email & enter your secret key for verifing your account.</p>
+                        <form onSubmit={ handleFormSubmit } method="POST">
+                            <input type="text" placeholder='Secret Key' className='input-area' name='secretKey' onChange={ handleInputUpdate } />
                             <hr />
                             <div className="sbmt-btns">
-                                <button type='submit' className='btn cancel'><b>Cancel</b></button>
-                                <button type='submit' className='btn btn-primary search'><b>Search</b></button> 
+                                <button type='submit' className='btn btn-primary search'><b>Verify Now</b></button> 
                             </div>
                         </form>
                     </div>
@@ -166,4 +176,13 @@ class ResetPassword extends Component {
     )
   }
 }
-export default ResetPassword;
+
+// navigaiton , params
+export function AccVerifyWithRouter(){
+    const { token } = useParams();
+    const navigate = useNavigate();
+
+    return (<AccVerify token={token} navigate={navigate} />);
+}
+
+export default AccVerify;

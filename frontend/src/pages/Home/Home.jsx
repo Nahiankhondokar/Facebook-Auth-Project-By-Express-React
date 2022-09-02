@@ -8,10 +8,24 @@ import { HiOutlineSearch } from "react-icons/hi";
 import { AiOutlineLogout } from "react-icons/ai";
 import NewsFeed from '../../components/NewsFeed/NewsFeed';
 import Image from './../../../../frontend/src/img/me.jpg';
+import cookie from 'js-cookie';
 import './Home.scss';
+import { useNavigate } from 'react-router-dom';
 
 class Home extends Component {
+
+
+
   render() {
+
+    // logout
+    const handleLogout = (e) => {
+      e.preventDefault();
+
+      cookie.remove('token');
+      this.props.navigate('/login');
+    }
+
     return (
     <>
     <TopBar />
@@ -45,7 +59,7 @@ class Home extends Component {
                     <div className="icon">
                       <AiOutlineLogout />
                     </div> 
-                    <a href='#'>Log Out</a>
+                    <a href='#' onClick={ handleLogout }>Log Out</a>
                   </div>
                 </li>
                 <li>
@@ -195,6 +209,14 @@ class Home extends Component {
     </>
     )
   }
+}
+
+// navigation
+export function HomeWithRouter(){
+
+  const navigate = useNavigate();
+
+  return <Home navigate={navigate} />
 }
 
 export default Home;

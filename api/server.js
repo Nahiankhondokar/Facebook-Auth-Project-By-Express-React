@@ -5,6 +5,7 @@ import userRoute from './routes/userRoute.js';
 import mongoDBConnection from './config/db.js';
 import errorHandler from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // express initialize
 const app = express(); 
@@ -18,6 +19,7 @@ const PORT = process.env.SERVER_PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }))
 app.use(cookieParser());
+app.use(cors())
 
 // routes
 app.use('/api/users', userRoute);
